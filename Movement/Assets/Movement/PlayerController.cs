@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
 
-    public float moveSpeed = 5;
-    private float maxSpeed = 7;
+    public float moveSpeed = 10;
+    private float maxSpeed = 20;
     public Transform orientation;
     public float playerHeight;
     public LayerMask Ground;
@@ -78,9 +78,9 @@ public class PlayerController : MonoBehaviour
         PlayerInput();
         ControlSpeed();
 
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground); //Checks to see if player is on ground
         
-        if (grounded == true)
+        if (grounded == true) //Drag is used to slow and stop player on ground. Set to 0 in air for momentum.
         {
             rb.drag = groundDrag;
 
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
 
-        if(Input.GetKey(crouchKey) && (horizontalInput != 0 || verticalInput !=0 ) && rb.velocity.x > crouchSpeed + 1)
+        if(Input.GetKey(crouchKey) && (horizontalInput != 0 || verticalInput !=0 ) && rb.velocity.x > crouchSpeed + 1) //Attempt at sliding. Not working currently
         {
             StartSliding();
         } else 
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = transform.forward * dashForce;
             canDash = false;
-            maxSpeed = 10;
+            maxSpeed = 50;
             groundDrag = 0;
             Invoke(nameof(ResetDash), dashCooldown);
         }
@@ -136,22 +136,21 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKey(crouchKey))
         {
             transform.localScale = new Vector3(transform.localScale.x, crouchYScale, transform.localScale.z);
-            if(grounded)
+            if(grounded) //Adds a downward force if on ground so player doesn't appear to 'fall' when crouching. 
             {
                 rb.AddForce(Vector3.down * 0.1f, ForceMode.Impulse);
             }
-        } else
-        {
+        } else {
             transform.localScale = new Vector3(transform.localScale.x, crouchYStart, transform.localScale.z);
         }
     }
 
-    private void StateHandler()
+    private void StateHandler() //Dictates speed variables. Mess with these if you want to change values.
     {
         if(grounded)
         {
             state = PlayerState.onGround;
-            maxSpeed = 10;
+            maxSpeed = 20;
         } else if (!grounded)
         {
             state = PlayerState.inAir;
@@ -197,7 +196,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(moveDirection.normalized * 2f, ForceMode.Force);
         }
 
-        if(OnSlope())
+        if(OnSlope()) //Normalize the movement direction on a slope.
         {
             rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
             if(rb.velocity.y > 0)
@@ -207,13 +206,15 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        rb.useGravity = !OnSlope();
+        rb.useGravity = !OnSlope(); //Turns gravity off if player is on slope to avoid unintentional sliding
 
     }
 
-    private void ControlSpeed()
+    private void ControlSpeed() //Keeps player speed capped
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        //Grounded
 
         if(flatVel.magnitude > maxSpeed && grounded == true)
         {
@@ -221,11 +222,15 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
         }
 
+        //In Air
+
         if (flatVel.magnitude > maxSpeed && grounded == false)
         {
             Vector3 limitVel = flatVel.normalized * maxSpeed;
             rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
         }
+
+        //Grounded on slope
 
         if(OnSlope() && exitSlope == false)
         {
@@ -273,7 +278,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private bool OnSlope()
+    private bool OnSlope() //Checks to see if player is on slope.
     {
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
