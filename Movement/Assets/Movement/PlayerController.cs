@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
 
     public float moveSpeed = 10;
-    private float maxSpeed = 20;
+    private float maxSpeed = 10;
     public Transform orientation;
     public float playerHeight;
     public LayerMask Ground;
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground); //Checks to see if player is on ground
         
-        if (grounded == true) //Drag is used to slow and stop player on ground. Set to 0 in air for momentum.
+        if (grounded == true && !Input.GetKey(crouchKey)) //Drag is used to slow and stop player on ground. Set to 0 in air for momentum.
         {
             rb.drag = groundDrag;
 
@@ -89,20 +89,28 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
 
-        if(Input.GetKey(crouchKey) && (horizontalInput != 0 || verticalInput !=0 ) && rb.velocity.x > crouchSpeed + 1) //Attempt at sliding. Not working currently
+        if(Input.GetKey(crouchKey) && (horizontalInput != 0 || verticalInput !=0 ) && !sliding) //Attempt at sliding. Not working currently
         {
             StartSliding();
-        } else 
-        Debug.Log(rb.velocity);
+            
+        }
+
+        Debug.Log(rb.velocity.normalized);
+
+        if (sliding == true)
+        {
+            SlidingMovement();
+        }
+        else
+        {
+            Move();
+        }
     }
 
     void FixedUpdate()
     {
-        Move();
-        if(sliding == true)
-        {
-            SlidingMovement();
-        }
+        
+        
     }
 
     private void PlayerInput()
@@ -150,7 +158,7 @@ public class PlayerController : MonoBehaviour
         if(grounded)
         {
             state = PlayerState.onGround;
-            maxSpeed = 20;
+            maxSpeed = 10;
         } else if (!grounded)
         {
             state = PlayerState.inAir;
@@ -167,8 +175,8 @@ public class PlayerController : MonoBehaviour
             rb.drag = groundDrag;
         } else if (Input.GetKey(crouchKey) && moveSpeed > crouchSpeed + 1)
         {
-            state = PlayerState.sliding;
-            rb.drag = 0;
+            //state = PlayerState.sliding;
+            //rb.drag = 0;
         }
     }
 
@@ -198,7 +206,7 @@ public class PlayerController : MonoBehaviour
 
         if(OnSlope()) //Normalize the movement direction on a slope.
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 20f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 10f, ForceMode.Force);
             if(rb.velocity.y > 0)
             {
                 rb.AddForce(Vector3.down * 5f, ForceMode.Force);
@@ -253,11 +261,20 @@ public class PlayerController : MonoBehaviour
     private void StartSliding()
     {
         sliding = true;
+        rb.drag = 0;
     }
 
     private void SlidingMovement()
     {
-
+        horizontalInput = 0;
+        verticalInput = 0;
+        if(rb.velocity.x == 0 && rb.velocity.z == 0)
+        {
+            EndSlide();
+        }
+        if(Input.GetKeyUp(crouchKey)) {
+            EndSlide();
+        }
     }
 
     private void EndSlide()
