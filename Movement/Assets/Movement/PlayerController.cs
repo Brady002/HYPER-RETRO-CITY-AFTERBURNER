@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Transform orientation;
     public float playerHeight;
     public LayerMask Ground;
+    public float normalMaxSpeed = 10f;
     public float groundDrag;
     private bool grounded;
     private float horizontalInput;
@@ -95,8 +96,6 @@ public class PlayerController : MonoBehaviour
             
         }
 
-        Debug.Log(rb.velocity.normalized);
-
         if (sliding == true)
         {
             SlidingMovement();
@@ -136,7 +135,7 @@ public class PlayerController : MonoBehaviour
             canDash = false;
             maxSpeed = 50;
             groundDrag = 0;
-            Invoke(nameof(ResetDash), dashCooldown);
+            Invoke(nameof(EndDash), 0.3f);
         }
 
         //Crouching
@@ -158,11 +157,11 @@ public class PlayerController : MonoBehaviour
         if(grounded)
         {
             state = PlayerState.onGround;
-            maxSpeed = 10;
+            maxSpeed = normalMaxSpeed;
         } else if (!grounded)
         {
             state = PlayerState.inAir;
-            maxSpeed = 20;
+            maxSpeed = normalMaxSpeed;
         } else if(canDash == true && Input.GetKey(dashKey))
         {
             state = PlayerState.dashing;
@@ -192,6 +191,7 @@ public class PlayerController : MonoBehaviour
         if (grounded == false)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            Debug.Log("Not Grounded");
         }
 
         if(state == PlayerState.crouched)
@@ -288,11 +288,16 @@ public class PlayerController : MonoBehaviour
         exitSlope = false;
     }
 
+    private void EndDash()
+    {
+        groundDrag = 5f;
+        maxSpeed = normalMaxSpeed;
+        Invoke(nameof(ResetDash), dashCooldown);
+    }
+
     private void ResetDash()
     {
         canDash = true;
-        groundDrag = 5;
-
     }
 
     private bool OnSlope() //Checks to see if player is on slope.

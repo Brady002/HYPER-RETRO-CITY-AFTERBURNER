@@ -3523,13 +3523,14 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 64
+  normalMaxSpeed: 10
   groundDrag: 2
   crouchSpeed: 3
   crouchYScale: 0.5
   crouchYStart: 0
   jumpForce: 10
   jumpCooldown: 0.2
-  airMultiplier: 0.1
+  airMultiplier: 0.05
   dashForce: 25
   dashCooldown: 1
   maxSlopeAngle: 40
