@@ -12,8 +12,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Movement")]
 
-    public float moveSpeed = 10;
-    private float maxSpeed = 10;
+    public float baseMoveSpeed;
+    private float moveSpeed;
+    private float maxSpeed;
     public float wallRunSpeed;
     public Transform orientation;
     public float playerHeight;
@@ -51,6 +52,10 @@ public class PlayerController : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitSlope = false;
 
+    [Header("Energy")]
+    public float energy;
+    public float maxEnergy;
+
     [Header("Unity Setup")]
 
     public Rigidbody rb;
@@ -75,16 +80,24 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         crouchYStart = transform.localScale.y;
+
+        maxSpeed = normalMaxSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(moveSpeed);
+
+        moveSpeed = baseMoveSpeed + (energy * 1f);
+
         PlayerInput();
         ControlSpeed();
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground); //Checks to see if player is on ground
+
         
+
         if (grounded == true && !Input.GetKey(crouchKey)) //Drag is used to slow and stop player on ground. Set to 0 in air for momentum.
         {
             rb.drag = groundDrag;
@@ -133,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         //Dashing
 
-        if (Input.GetKey(dashKey) && canDash == true)
+        if (Input.GetKey(dashKey) && canDash == true && energy > 0)
         {
             rb.velocity = transform.forward * dashForce;
             canDash = false;
@@ -168,8 +181,8 @@ public class PlayerController : MonoBehaviour
         } else if (!grounded)
         {
             state = PlayerState.inAir;
-            maxSpeed = normalMaxSpeed;
-        } else if(canDash == true && Input.GetKey(dashKey))
+            maxSpeed = 50;
+        } else if(canDash == true && Input.GetKey(dashKey) && energy > 0)
         {
             state = PlayerState.dashing;
             maxSpeed = 50;
@@ -314,6 +327,7 @@ public class PlayerController : MonoBehaviour
     private void EndDash()
     {
         groundDrag = 5f;
+        energy--;
         maxSpeed = normalMaxSpeed;
         Invoke(nameof(ResetDash), dashCooldown);
     }
