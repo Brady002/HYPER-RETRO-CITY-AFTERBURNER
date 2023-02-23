@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public float moveSpeed = 10;
     private float maxSpeed = 10;
+    public float wallRunSpeed;
     public Transform orientation;
     public float playerHeight;
     public LayerMask Ground;
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private Vector3 moveDirection;
+    private bool exitWallRun = false;
 
     [Header("Crouching")]
     public float crouchSpeed = 3f;
@@ -61,9 +63,11 @@ public class PlayerController : MonoBehaviour
         inAir,
         dashing,
         crouched,
-        sliding
+        sliding,
+        wallRunning
     }
-    
+
+    public bool wallRunning;
 
     // Start is called before the first frame update
     void Start()
@@ -154,6 +158,9 @@ public class PlayerController : MonoBehaviour
 
     private void StateHandler() //Dictates speed variables. Mess with these if you want to change values.
     {
+
+        //Grounded and Air
+
         if(grounded)
         {
             state = PlayerState.onGround;
@@ -168,6 +175,8 @@ public class PlayerController : MonoBehaviour
             maxSpeed = 50;
         }
 
+        //Crouching & Sliding
+
         if(Input.GetKey(crouchKey) && moveSpeed < crouchSpeed + 1)
         {
             state = PlayerState.crouched;
@@ -176,6 +185,14 @@ public class PlayerController : MonoBehaviour
         {
             //state = PlayerState.sliding;
             //rb.drag = 0;
+        }
+
+        //Wall Running
+
+        if(wallRunning)
+        {
+            state = PlayerState.wallRunning;
+            moveSpeed = wallRunSpeed;
         }
     }
 
@@ -191,7 +208,6 @@ public class PlayerController : MonoBehaviour
         if (grounded == false)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
-            Debug.Log("Not Grounded");
         }
 
         if(state == PlayerState.crouched)
@@ -251,11 +267,18 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        exitSlope = true;
+        if(wallRunning)
+        {
+            
+        } else
+        {
+            exitSlope = true;
 
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+        
     }
 
     private void StartSliding()
