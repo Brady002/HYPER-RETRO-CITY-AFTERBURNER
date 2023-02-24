@@ -11,6 +11,7 @@ public class WallRunning : MonoBehaviour
     public float wallRunForce;
     public float maxWallRunTime;
     private float wallRunTime;
+    private bool canWallRun = true;
 
     [Header("Inputs")]
     private float horizontalInput;
@@ -72,14 +73,14 @@ public class WallRunning : MonoBehaviour
         if(wallLeft || wallRight && verticalInput > 0 && AboveGround() == true)
         {
             Debug.Log(AboveGround());
-            if(!pc.wallRunning && verticalInput > 0)
+            if(!pc.wallRunning && verticalInput > 0 && canWallRun)
             {
                 StartWallRun();
                 
             }
         } else
         {
-            if(pc.wallRunning || verticalInput < 1)
+            if(pc.wallRunning || verticalInput < 1 || !canWallRun)
             {
                 StopWallRun();
             }
@@ -89,6 +90,7 @@ public class WallRunning : MonoBehaviour
     private void StartWallRun()
     {
         pc.wallRunning = true;
+        wallRunTime = maxWallRunTime;
     }
 
     private void WallRunMovement()
@@ -109,16 +111,44 @@ public class WallRunning : MonoBehaviour
 
         if(Input.GetKey(pc.jumpKey))
         {
-            //exitWallRun = true;
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
             rb.AddForce(wallNormal * (pc.jumpForce/2) + transform.up * (pc.jumpForce/2), ForceMode.Impulse);
         }
+
+        wallRunTime -= Time.deltaTime;
+        if(wallRunTime <= 0 && pc.wallRunning)
+        {
+            rb.AddForce(wallNormal * pc.jumpForce, ForceMode.Impulse);
+            StopWallRun();
+        }
+
     }
 
     private void StopWallRun()
     {
         pc.wallRunning = false;
         rb.useGravity = true;
+        canWallRun = false;
+        Invoke(nameof(ResetWallRun), 0.2f);
+    }
+
+    private void ResetWallRun()
+    {
+        canWallRun = true;
+        wallRunTime = maxWallRunTime;
+    }
+
+    IEnumerator WallRunTime()
+    {
+        Vector3 wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
+
+        yield return new WaitForSeconds(maxWallRunTime);
+        if(pc.wallRunning)
+        {
+            canWallRun = false;
+            StopWallRun();
+        }
+        StopCoroutine(WallRunTime());
     }
 }
