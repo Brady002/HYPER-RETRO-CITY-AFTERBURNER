@@ -10,18 +10,81 @@ public class PlayerCam : MonoBehaviour
     private float mouseY;
     private float xRotation;
     private float yRotation;
-    private float zRotation = 0;
+
+    public float camTilt;
+    private float tiltRotation;
+    private float zRotation;
+    private float rotTime = 0;
+
     public Transform orientation;
+
+    private WallRunning wr;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        wr = GetComponentInParent<WallRunning>();
+        zRotation = 0;
     }
     float map(float x, float in_min, float in_max, float out_min, float out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    void Update()
+    {
+
+        if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning && wr.wallLeft)
+        {
+            if (tiltRotation >= -camTilt)
+            {
+                if(rotTime < 1)
+                {
+                    rotTime += Time.deltaTime * 0.1f;
+                }
+                
+                
+                tiltRotation += Mathf.Lerp(0, -camTilt, rotTime);
+                Debug.Log(rotTime);
+            }
+
+            
+
+        }
+        else if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning && wr.wallRight)
+        {
+            if (tiltRotation <= camTilt)
+            {
+                if (rotTime < 1)
+                {
+                    rotTime += Time.deltaTime * 0.1f;
+                }
+
+                tiltRotation += Mathf.Lerp(0, camTilt, rotTime);
+                Debug.Log(rotTime);
+            }
+        }
+        else
+        {
+            
+            rotTime = 0;
+            if(tiltRotation != 0)
+            {
+
+                if(tiltRotation < 0)
+                {
+                    tiltRotation += Mathf.Lerp(-camTilt)
+                } else if (tiltRotation > 0)
+                {
+
+                }
+            }
+            tiltRotation = 0;
+            
+            
+        }
     }
 
     // Update is called once per frame
@@ -29,14 +92,8 @@ public class PlayerCam : MonoBehaviour
     {
         GetComponent<Camera>().fieldOfView = map(gameObject.transform.parent.GetComponent<Rigidbody>().velocity.magnitude, 0, 50, 60, 80);
 
-        if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning)
-        {
-            zRotation = -10f;
-        }
-        else if (gameObject.transform.parent.GetComponent<PlayerController>().grounded)
-        {
-            zRotation = 0;
-        }
+        zRotation = tiltRotation;
+        
         mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
         mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
 

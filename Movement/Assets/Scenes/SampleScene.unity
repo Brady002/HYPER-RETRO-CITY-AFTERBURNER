@@ -2879,6 +2879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensitivityX: 1000
   sensitivityY: 1000
+  camTilt: 10
   orientation: {fileID: 1710718911}
 --- !u!1 &1053608014
 GameObject:
@@ -7184,10 +7185,12 @@ MonoBehaviour:
   isWall:
     serializedVersion: 2
     m_Bits: 64
-  wallRunForce: 200
+  wallRunForce: 75
   maxWallRunTime: 1
   wallCheckDistance: 1
   minHeight: 2
+  wallLeft: 0
+  wallRight: 0
   orientation: {fileID: 1710718911}
 --- !u!43 &1988130950
 Mesh:

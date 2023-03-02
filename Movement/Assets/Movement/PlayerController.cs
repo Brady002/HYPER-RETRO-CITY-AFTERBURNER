@@ -188,7 +188,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (wallRunning)
         {
-            Debug.Log("wall running");
             state = PlayerState.wallRunning;
             moveSpeed = wallRunSpeed;
             if (rb.velocity.magnitude > 20)
@@ -226,7 +225,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Wall Running
-        Debug.Log(maxSpeed);
+        //Debug.Log(maxSpeed);
 
     }
 

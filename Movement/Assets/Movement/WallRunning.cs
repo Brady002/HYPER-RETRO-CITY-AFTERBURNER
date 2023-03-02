@@ -22,8 +22,8 @@ public class WallRunning : MonoBehaviour
     public float minHeight;
     private RaycastHit leftWallHit;
     private RaycastHit rightWallHit;
-    private bool wallLeft;
-    private bool wallRight;
+    public bool wallLeft;
+    public bool wallRight;
 
     [Header("References")]
     public Transform orientation;
@@ -52,7 +52,7 @@ public class WallRunning : MonoBehaviour
         }
     }
 
-    private void CheckForWall()
+    public void CheckForWall()
     {
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallCheckDistance, isWall);
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallCheckDistance, isWall);
@@ -72,7 +72,6 @@ public class WallRunning : MonoBehaviour
         //State 1
         if(wallLeft || wallRight && verticalInput > 0 && AboveGround() == true)
         {
-            Debug.Log(AboveGround());
             if(!pc.wallRunning && verticalInput > 0 && canWallRun)
             {
                 StartWallRun();
