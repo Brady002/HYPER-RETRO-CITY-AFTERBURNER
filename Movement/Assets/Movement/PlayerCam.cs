@@ -10,7 +10,7 @@ public class PlayerCam : MonoBehaviour
     private float mouseY;
     private float xRotation;
     private float yRotation;
-
+    private float zRotation = 0;
     public Transform orientation;
 
     // Start is called before the first frame update
@@ -19,10 +19,24 @@ public class PlayerCam : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    float map(float x, float in_min, float in_max, float out_min, float out_max)
+    {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
 
     // Update is called once per frame
     void LateUpdate()
     {
+        GetComponent<Camera>().fieldOfView = map(gameObject.transform.parent.GetComponent<Rigidbody>().velocity.magnitude, 0, 50, 60, 80);
+
+        if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning)
+        {
+            zRotation = -10f;
+        }
+        else if (gameObject.transform.parent.GetComponent<PlayerController>().grounded)
+        {
+            zRotation = 0;
+        }
         mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
         mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
 
@@ -31,7 +45,7 @@ public class PlayerCam : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, zRotation);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 }
