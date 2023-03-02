@@ -7185,11 +7185,7 @@ MonoBehaviour:
   isWall:
     serializedVersion: 2
     m_Bits: 64
-<<<<<<< HEAD
   wallRunForce: 75
-=======
-  wallRunForce: 100
->>>>>>> 999c7faf8b16e4a22057fa862815cfb342a086be
   maxWallRunTime: 1
   wallCheckDistance: 1
   minHeight: 2
