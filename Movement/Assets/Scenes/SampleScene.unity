@@ -2880,6 +2880,7 @@ MonoBehaviour:
   sensitivityX: 1000
   sensitivityY: 1000
   orientation: {fileID: 1710718911}
+  camTilt: 10
 --- !u!1 &1053608014
 GameObject:
   m_ObjectHideFlags: 0
@@ -7142,8 +7143,8 @@ MonoBehaviour:
   jumpKey: 32
   dashKey: 304
   crouchKey: 306
-  baseMoveSpeed: 0.5
-  wallRunSpeed: 20
+  baseMoveSpeed: 1
+  wallRunSpeed: 5
   orientation: {fileID: 1710718911}
   playerHeight: 2
   Ground:
@@ -7161,7 +7162,7 @@ MonoBehaviour:
   dashForce: 25
   dashCooldown: 1
   maxSlopeAngle: 40
-  energy: 2
+  energy: 0
   maxEnergy: 0
   rb: {fileID: 1710718909}
   state: 0
@@ -7188,6 +7189,8 @@ MonoBehaviour:
   maxWallRunTime: 1
   wallCheckDistance: 1
   minHeight: 2
+  wallLeft: 0
+  wallRight: 0
   orientation: {fileID: 1710718911}
 --- !u!43 &1988130950
 Mesh:
