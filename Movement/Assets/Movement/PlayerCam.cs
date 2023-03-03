@@ -36,17 +36,16 @@ public class PlayerCam : MonoBehaviour
     void Update()
     {
 
-        if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning && wr.wallLeft)
+        if (pc.wallRunning && wr.wallLeft)
         {
             rotTime += Time.deltaTime;
             if (tiltRot > -camTilt)
             {
                tiltRot += Mathf.Lerp(0, -camTilt, rotTime);
             }
-            Debug.Log(tiltRot);
 
         }
-        else if (gameObject.transform.parent.GetComponent<PlayerController>() && wr.wallRight)
+        else if (pc.wallRunning && wr.wallRight)
         {
             rotTime += Time.deltaTime;
             if (tiltRot < camTilt)

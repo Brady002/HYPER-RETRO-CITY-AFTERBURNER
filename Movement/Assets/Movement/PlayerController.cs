@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         moveSpeed = baseMoveSpeed + (energy * 1f);
 
-
+        Debug.Log(GetSlopeMoveDirection());
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground); //Checks to see if player is on ground
 
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
 
         if (OnSlope()) //Normalize the movement direction on a slope.
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 2f, ForceMode.Force);
             if (rb.velocity.y > 0)
             {
                 rb.AddForce(Vector3.down * 5f, ForceMode.Force);
@@ -296,10 +296,10 @@ public class PlayerController : MonoBehaviour
 
         if (OnSlope() && !exitSlope)
         {
-            if (rb.velocity.magnitude > maxSpeed)
+            /*if (rb.velocity.magnitude > maxSpeed)
             {
                 rb.velocity = rb.velocity.normalized * moveSpeed;
-            }
+            }*/
         }
     }
 
