@@ -22,8 +22,8 @@ public class WallRunning : MonoBehaviour
     public float minHeight;
     private RaycastHit leftWallHit;
     private RaycastHit rightWallHit;
-    private bool wallLeft;
-    private bool wallRight;
+    public bool wallLeft;
+    public bool wallRight;
 
     [Header("References")]
     public Transform orientation;
@@ -58,7 +58,7 @@ public class WallRunning : MonoBehaviour
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallCheckDistance, isWall);
     }
 
-    private bool AboveGround()
+    public bool AboveGround()
     {
         return !Physics.Raycast(transform.position, Vector3.down, minHeight, isGround);
     }
@@ -72,7 +72,6 @@ public class WallRunning : MonoBehaviour
         //State 1
         if(wallLeft || wallRight && verticalInput > 0 && AboveGround() == true)
         {
-            Debug.Log(AboveGround());
             if(!pc.wallRunning && verticalInput > 0 && canWallRun)
             {
                 StartWallRun();
@@ -108,8 +107,9 @@ public class WallRunning : MonoBehaviour
         }
 
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
+        rb.AddForce(-wallNormal * 100f, ForceMode.Force);
 
-        if(Input.GetKey(pc.jumpKey))
+        if (Input.GetKey(pc.jumpKey))
         {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 

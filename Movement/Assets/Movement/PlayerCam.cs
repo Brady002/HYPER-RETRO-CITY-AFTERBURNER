@@ -13,15 +13,54 @@ public class PlayerCam : MonoBehaviour
     private float zRotation = 0;
     public Transform orientation;
 
+
+    private PlayerController pc;
+    private WallRunning wr;
+    private float tiltRot;
+    private float rotTime = 0;
+    public float camTilt;
+
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        pc = GetComponentInParent<PlayerController>();
+        wr = GetComponentInParent<WallRunning>();
     }
     float map(float x, float in_min, float in_max, float out_min, float out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    void Update()
+    {
+
+        if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning && wr.wallLeft)
+        {
+            rotTime += Time.deltaTime;
+            if (tiltRot > -camTilt)
+            {
+               tiltRot += Mathf.Lerp(0, -camTilt, rotTime);
+            }
+            Debug.Log(tiltRot);
+
+        }
+        else if (gameObject.transform.parent.GetComponent<PlayerController>() && wr.wallRight)
+        {
+            rotTime += Time.deltaTime;
+            if (tiltRot < camTilt)
+            {
+                
+                tiltRot += Mathf.Lerp(0, camTilt, rotTime);
+            }
+            
+        } else
+        {
+            rotTime = 0f;
+
+            tiltRot = 0f;
+        }
     }
 
     // Update is called once per frame
@@ -29,14 +68,8 @@ public class PlayerCam : MonoBehaviour
     {
         GetComponent<Camera>().fieldOfView = map(gameObject.transform.parent.GetComponent<Rigidbody>().velocity.magnitude, 0, 50, 60, 80);
 
-        if (gameObject.transform.parent.GetComponent<PlayerController>().wallRunning)
-        {
-            zRotation = -10f;
-        }
-        else if (gameObject.transform.parent.GetComponent<PlayerController>().grounded)
-        {
-            zRotation = 0;
-        }
+        zRotation = tiltRot;
+        
         mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensitivityX;
         mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensitivityY;
 
