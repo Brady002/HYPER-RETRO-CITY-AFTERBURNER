@@ -6745,8 +6745,12 @@ PrefabInstance:
       value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 748222425422105689, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+      propertyPath: energy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 748222425422105689, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
       propertyPath: dashForce
-      value: 40
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 748222425422105689, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
       propertyPath: groundDrag

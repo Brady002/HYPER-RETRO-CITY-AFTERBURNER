@@ -202,7 +202,7 @@ public class PlayerController : MonoBehaviour
         {
 
             state = PlayerState.inAir;
-            maxSpeed = 50;
+            maxSpeed = 12;
         }
         else if (canDash == true && Input.GetKey(dashKey) && energy > 0)
         {
