@@ -233,27 +233,27 @@ public class PlayerController : MonoBehaviour
 
         if (grounded == true && !sliding)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * Time.deltaTime * 10f, ForceMode.Force);
         }
 
         if (grounded == false)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * Time.deltaTime * 10f * airMultiplier, ForceMode.Force);
         }
 
         if (state == PlayerState.crouched)
         {
-            rb.AddForce(moveDirection.normalized * crouchSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * crouchSpeed * Time.deltaTime * 10f, ForceMode.Force);
         }
 
         if (sliding == true)
         {
-            rb.AddForce(moveDirection.normalized * 2f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * 2f * Time.deltaTime, ForceMode.Force);
         }
 
         if (OnSlope()) //Normalize the movement direction on a slope.
         {
-            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * 2f, ForceMode.Force);
+            rb.AddForce(GetSlopeMoveDirection() * moveSpeed * Time.deltaTime * 2f, ForceMode.Force);
             if (rb.velocity.y > 0)
             {
                 rb.AddForce(Vector3.down * 5f, ForceMode.Force);
@@ -379,5 +379,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 GetSlopeMoveDirection()
     {
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+    }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        Debug.Log("GOT GOOMBAD collision" + coll.contacts[0].normal);
+        if (coll.contacts[0].normal.y == 1f && coll.gameObject.CompareTag("Enemy"))
+        {
+
+            Debug.Log("GOT GOOMBAD");
+            rb.velocity = new Vector3(rb.velocity.x * 1.4f, 0f, rb.velocity.z);
+
+            rb.AddForce(transform.up * (jumpForce / 1.6f), ForceMode.Impulse);
+        }
     }
 }
