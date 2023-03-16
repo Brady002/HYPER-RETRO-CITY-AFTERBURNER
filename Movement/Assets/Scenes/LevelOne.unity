@@ -2371,7 +2371,7 @@ MonoBehaviour:
   sensitivityX: 1000
   sensitivityY: 1000
   orientation: {fileID: 1385965981}
-  camTilt: 3
+  camTilt: 10
 --- !u!81 &284452225
 AudioListener:
   m_ObjectHideFlags: 0
@@ -9063,7 +9063,7 @@ MonoBehaviour:
   crouchYStart: 0
   jumpForce: 8
   jumpCooldown: 0.2
-  airMultiplier: 0.1
+  airMultiplier: 0.15
   dashForce: 100
   dashCooldown: 1
   maxSlopeAngle: 40

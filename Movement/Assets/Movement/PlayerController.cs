@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
         moveSpeed = baseMoveSpeed + (energy * 1f);
 
-        Debug.Log(GetSlopeMoveDirection());
+        Debug.Log(rb.velocity);
 
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, Ground); //Checks to see if player is on ground
 
@@ -184,19 +184,19 @@ public class PlayerController : MonoBehaviour
             state = PlayerState.wallRunning;
             moveSpeed = wallRunSpeed;
             maxSpeed = normalMaxSpeed + 2f;
-            /*if (rb.velocity.magnitude > 20)
+            if (rb.velocity.magnitude > 20)
             {
                 float mult = 20 / rb.velocity.magnitude;
                 Vector3 update = new Vector3(rb.velocity.x * mult, rb.velocity.y * mult, rb.velocity.z * mult);
                 rb.velocity = update;
-            }*/
+            }
         }
 
         else if (!grounded)
         {
 
             state = PlayerState.inAir;
-            maxSpeed = 12;
+            maxSpeed = 10f;
         }
         else if (canDash == true && Input.GetKey(dashKey) && energy > 0)
         {
@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour
 
         if (sliding == true)
         {
-            rb.AddForce(moveDirection.normalized * 2f * Time.deltaTime, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * 2f, ForceMode.Force);
         }
 
         if (OnSlope()) //Normalize the movement direction on a slope.
