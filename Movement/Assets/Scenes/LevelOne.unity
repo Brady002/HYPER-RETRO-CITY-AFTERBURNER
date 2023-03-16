@@ -1255,7 +1255,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-10096
+  m_Name: pb_Mesh17144
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1449,6 +1449,60 @@ Transform:
   m_Father: {fileID: 2110376655}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &126146397 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 748222425422105637, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+  m_PrefabInstance: {fileID: 1524827949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &126146398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126146397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95248e567b296be4f8c3598456f66134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpKey: 32
+  dashKey: 304
+  crouchKey: 306
+  baseMoveSpeed: 1
+  wallRunSpeed: 5
+  orientation: {fileID: 126146402}
+  playerHeight: 2
+  Ground:
+    serializedVersion: 2
+    m_Bits: 64
+  normalMaxSpeed: 10
+  groundDrag: 3
+  grounded: 0
+  crouchSpeed: 3
+  crouchYScale: 0.5
+  crouchYStart: 2
+  jumpForce: 8
+  jumpCooldown: 0.2
+  airMultiplier: 0.1
+  dashForce: 8
+  dashCooldown: 1
+  maxSlopeAngle: 40
+  energy: 0
+  maxEnergy: 0
+  rb: {fileID: 126146400}
+  state: 0
+  wallRunning: 0
+--- !u!54 &126146400 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 748222425422105636, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+  m_PrefabInstance: {fileID: 1524827949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &126146402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 748222425422105638, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+  m_PrefabInstance: {fileID: 1524827949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &131003122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2543,13 +2597,34 @@ Transform:
   m_Father: {fileID: 125918368}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &259423685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 748222424559541992, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+  m_PrefabInstance: {fileID: 1524827949}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &259423687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259423685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d4631833b1b19b46a7232f183bdacbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivityX: 1000
+  sensitivityY: 1000
+  orientation: {fileID: 126146402}
+  camTilt: 10
 --- !u!43 &304558004
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-14470
+  m_Name: pb_Mesh17074
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4357,7 +4432,7 @@ GameObject:
   - component: {fileID: 640760130}
   - component: {fileID: 640760129}
   - component: {fileID: 640760128}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5147,7 +5222,7 @@ GameObject:
   - component: {fileID: 839154084}
   - component: {fileID: 839154083}
   - component: {fileID: 839154082}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9117,7 +9192,7 @@ GameObject:
   - component: {fileID: 1511676725}
   - component: {fileID: 1511676724}
   - component: {fileID: 1511676723}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10148,7 +10223,9 @@ PrefabInstance:
       propertyPath: baseMoveSpeed
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 748222425422105689, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+    - {fileID: 748222424559541996, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
 --- !u!1 &1559539846
 GameObject:
@@ -14068,7 +14145,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-4300
+  m_Name: pb_Mesh17048
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
