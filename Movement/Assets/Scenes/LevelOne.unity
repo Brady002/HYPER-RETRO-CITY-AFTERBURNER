@@ -9048,26 +9048,26 @@ MonoBehaviour:
   jumpKey: 32
   dashKey: 304
   crouchKey: 306
-  baseMoveSpeed: 150
-  wallRunSpeed: 1250
+  baseMoveSpeed: 4
+  wallRunSpeed: 4
   orientation: {fileID: 1385965981}
   playerHeight: 2
   Ground:
     serializedVersion: 2
     m_Bits: 64
-  normalMaxSpeed: 600
+  normalMaxSpeed: 10
   groundDrag: 3
   grounded: 0
-  crouchSpeed: 1000
+  crouchSpeed: 3
   crouchYScale: 0.5
   crouchYStart: 0
   jumpForce: 8
   jumpCooldown: 0.2
   airMultiplier: 0.1
-  dashForce: 15000
+  dashForce: 100
   dashCooldown: 1
   maxSlopeAngle: 40
-  energy: 2
+  energy: 0
   maxEnergy: 0
   rb: {fileID: 1385965977}
   state: 0
@@ -9134,7 +9134,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1385965974}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

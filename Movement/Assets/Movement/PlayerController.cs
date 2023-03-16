@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         moveSpeed = baseMoveSpeed + (energy * 1f);
@@ -122,12 +122,6 @@ public class PlayerController : MonoBehaviour
         {
             Move();
         }
-    }
-
-    void FixedUpdate()
-    {
-
-
     }
 
     private void PlayerInput()
@@ -190,12 +184,12 @@ public class PlayerController : MonoBehaviour
             state = PlayerState.wallRunning;
             moveSpeed = wallRunSpeed;
             maxSpeed = normalMaxSpeed + 2f;
-            if (rb.velocity.magnitude > 20)
+            /*if (rb.velocity.magnitude > 20)
             {
                 float mult = 20 / rb.velocity.magnitude;
                 Vector3 update = new Vector3(rb.velocity.x * mult, rb.velocity.y * mult, rb.velocity.z * mult);
                 rb.velocity = update;
-            }
+            }*/
         }
 
         else if (!grounded)
@@ -233,17 +227,17 @@ public class PlayerController : MonoBehaviour
 
         if (grounded == true && !sliding)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * Time.deltaTime * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         }
 
         if (grounded == false)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * Time.deltaTime * 10f * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
 
         if (state == PlayerState.crouched)
         {
-            rb.AddForce(moveDirection.normalized * crouchSpeed * Time.deltaTime * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * crouchSpeed * 10f, ForceMode.Force);
         }
 
         if (sliding == true)

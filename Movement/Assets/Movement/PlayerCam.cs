@@ -60,7 +60,7 @@ public class PlayerCam : MonoBehaviour
             }
 
         }
-        else if (wasWallRunning)
+        /*else if (wasWallRunning)
         {
             Debug.Log("done running" + rotTime / 100000 + " " + tiltRot);
             rotTime += Time.deltaTime;
@@ -75,12 +75,12 @@ public class PlayerCam : MonoBehaviour
 
                 tiltRot += Mathf.Lerp(tiltRot, 0, .8f);
             }
-        }
+        }*/
         else
         {
             rotTime = 0f;
 
-            // tiltRot = 0f;
+            tiltRot = 0f;
         }
     }
 
