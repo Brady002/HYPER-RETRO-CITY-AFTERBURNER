@@ -15,7 +15,7 @@ public class Camera : MonoBehaviour
 
 
     private PlayerMover pc;
-    private WallRunning wr;
+    private RunningOnWalls wr;
     private float tiltRot;
     private float rotTime = 0;
     public float camTilt;
@@ -26,7 +26,7 @@ public class Camera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pc = GetComponentInParent<PlayerMover>();
-        wr = GetComponentInParent<WallRunning>();
+        wr = GetComponentInParent<RunningOnWalls>();
     }
     float map(float x, float in_min, float in_max, float out_min, float out_max)
     {

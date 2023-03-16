@@ -1493,6 +1493,31 @@ MonoBehaviour:
   rb: {fileID: 126146400}
   state: 0
   wallRunning: 0
+--- !u!114 &126146399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126146397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11503aa89adfe554f95a8531baeade36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGround:
+    serializedVersion: 2
+    m_Bits: 64
+  isWall:
+    serializedVersion: 2
+    m_Bits: 128
+  wallRunForce: 150
+  maxWallRunTime: 1
+  wallCheckDistance: 1
+  minHeight: 2
+  wallLeft: 0
+  wallRight: 0
+  orientation: {fileID: 126146402}
 --- !u!54 &126146400 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 748222425422105636, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
@@ -10226,6 +10251,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 748222425422105689, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
     - {fileID: 748222424559541996, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
+    - {fileID: 748222425422105688, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8b2a3ecdb600e224996f63ab9a7948e5, type: 3}
 --- !u!1 &1559539846
 GameObject:
