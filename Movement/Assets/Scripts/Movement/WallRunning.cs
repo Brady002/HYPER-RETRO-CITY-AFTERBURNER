@@ -27,14 +27,14 @@ public class WallRunning : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    private PlayerController pc;
+    private PlayerMover pc;
     private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        pc = GetComponent<PlayerController>();
+        pc = GetComponent<PlayerMover>();
         minHeight = pc.playerHeight;
     }
 
