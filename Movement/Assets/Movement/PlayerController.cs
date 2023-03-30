@@ -383,32 +383,9 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter(Collision coll)
     {
-        Debug.Log("GOT GOOMBAD collision" + coll.contacts[0].normal);
-        if (coll.contacts[0].normal.y == 1f && coll.gameObject.CompareTag("Enemy"))
-        {
-
-            Debug.Log("GOT GOOMBAD");
-            rb.velocity = new Vector3(rb.velocity.x * 1.4f, 0f, rb.velocity.z);
-
-            rb.AddForce(transform.up * (jumpForce / 1.6f), ForceMode.Impulse);
-            Vector3 local = FindObjectOfType<Waypoints>().gameObject.transform.localScale;
-            local.y = 1f;
-            FindObjectOfType<Waypoints>().gameObject.transform.localScale = local;
-
-
-            FindObjectOfType<Waypoints>().enabled = false;
-            Invoke("reEnable", 2f);
-        }
-    }
-
-    void reEnable()
-    {
-        Vector3 local = FindObjectOfType<Waypoints>().gameObject.transform.localScale;
-        local.y = 1.343615f;
-        FindObjectOfType<Waypoints>().gameObject.transform.localScale = local;
-
-
-        FindObjectOfType<Waypoints>().enabled = true;
+        FindObjectOfType<BoostCheck>().canBoost(coll, "Enemy", rb, jumpForce);
 
     }
+
+
 }

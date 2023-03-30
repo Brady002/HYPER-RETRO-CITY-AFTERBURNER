@@ -6,7 +6,7 @@ public class Waypoints : MonoBehaviour
 {
     [SerializeField]
     public GameObject[] waypoints;
-    public bool afterPlayer = false;
+
     public int currentTarget = 1;
     // Start is called before the first frame update
     void Start()
@@ -17,27 +17,25 @@ public class Waypoints : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!afterPlayer)
+        if (GetComponent<PlayerChase>() != null)
+        {
+
+            if (GetComponent<PlayerChase>().afterPlayer)
+            {
+                GameObject player = GameObject.FindWithTag("Player");
+                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 3 * Time.deltaTime);
+
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, waypoints[currentTarget].transform.position, 3 * Time.deltaTime);
+            }
+        }
+        else
         {
             transform.position = Vector3.MoveTowards(transform.position, waypoints[currentTarget].transform.position, 3 * Time.deltaTime);
         }
-        if (afterPlayer)
-        {
-            GameObject player = GameObject.FindWithTag("Player");
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, 3 * Time.deltaTime);
 
-        }
     }
 
-    void OnTriggerEnter(Collider coll)
-    {
-        if (!coll.CompareTag("Player")) return;
-        afterPlayer = true;
-    }
-
-    void OnTriggerExit(Collider coll)
-    {
-        if (!coll.CompareTag("Player")) return;
-        afterPlayer = false;
-    }
 }

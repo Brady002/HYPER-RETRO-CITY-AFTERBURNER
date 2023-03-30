@@ -19,7 +19,12 @@ public class WaypointCommunication : MonoBehaviour
     void OnTriggerEnter(Collider coll)
     {
         if (!coll.CompareTag("Enemy")) return;
-        if (coll.GetComponent<Waypoints>().afterPlayer) return;
+        if (coll.GetComponent<PlayerChase>() != null)
+        {
+            if (coll.GetComponent<PlayerChase>().afterPlayer) return;
+
+
+        }
         if (int.Parse(gameObject.name.Substring(gameObject.name.Length - 1)) == coll.GetComponent<Waypoints>().waypoints.Length)
         {
             coll.GetComponent<Waypoints>().currentTarget = 0;
