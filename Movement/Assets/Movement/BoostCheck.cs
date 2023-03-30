@@ -14,13 +14,16 @@ public class BoostCheck : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x * 1.4f, 0f, rb.velocity.z);
 
             rb.AddForce(transform.up * (jumpForce / 1.6f), ForceMode.Impulse);
-            Vector3 local = FindObjectOfType<Waypoints>().gameObject.transform.localScale;
-            local.y = 1f;
-            FindObjectOfType<Waypoints>().gameObject.transform.localScale = local;
+            if (tag == "Enemy")
+            {
+                Vector3 local = FindObjectOfType<Waypoints>().gameObject.transform.localScale;
+                local.y = 1f;
+                FindObjectOfType<Waypoints>().gameObject.transform.localScale = local;
 
 
-            FindObjectOfType<Waypoints>().enabled = false;
-            Invoke("reEnable", 2f);
+                FindObjectOfType<Waypoints>().enabled = false;
+                Invoke("reEnable", 2f);
+            }
         }
     }
 
