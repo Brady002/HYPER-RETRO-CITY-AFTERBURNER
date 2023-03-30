@@ -65,7 +65,7 @@ public class PlayerCam : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        GetComponent<Camera>().fieldOfView = map(gameObject.transform.parent.GetComponent<Rigidbody>().velocity.magnitude, 0, 50, 60, 80);
+        //GetComponent<Camera>().fieldOfView = map(gameObject.transform.parent.GetComponent<Rigidbody>().velocity.magnitude, 0, 50, 60, 80);
 
         zRotation = tiltRot;
         
