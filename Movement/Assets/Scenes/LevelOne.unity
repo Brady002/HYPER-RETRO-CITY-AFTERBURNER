@@ -2438,6 +2438,7 @@ GameObject:
   - component: {fileID: 300476156}
   - component: {fileID: 300476162}
   - component: {fileID: 300476158}
+  - component: {fileID: 300476163}
   m_Layer: 0
   m_Name: EnemyTest
   m_TagString: Enemy
@@ -2462,7 +2463,6 @@ MonoBehaviour:
   - {fileID: 216760270}
   - {fileID: 426026384}
   - {fileID: 1971515211}
-  afterPlayer: 0
   currentTarget: 1
 --- !u!54 &300476157
 Rigidbody:
@@ -2570,6 +2570,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &300476163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300476155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8e32bfa6d2aff488136168b575bf41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  afterPlayer: 0
 --- !u!43 &304558004
 Mesh:
   m_ObjectHideFlags: 0
